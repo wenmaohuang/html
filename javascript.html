@@ -1,0 +1,219 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <style>
+     textarea{
+       display: block;
+       width: 500px;
+       height: 120px;
+       overflow: hidden;
+     }
+     body{
+       width: 1000px;
+       margin: 0 auto;
+       background-color: #ac9;
+     }
+     .carry{
+       margin: 20px;
+       height: 300px;
+       width: 100%;
+       background-color: #985;
+     }
+     textarea{
+       margin: 20px;
+       width: 100%;
+       background-color: #555;
+     }
+     p{
+       font-size: ;
+     }
+     pre{
+       background-color: #975;
+     }
+     
+    </style>
+  </head>
+  <body>
+    <h1>JAVASCRIPT</h1>
+    <ol>
+      <li>插入元素:
+        <p>var box = document.querySelector("元素")</p>
+        <p>box.innerHTML = `标签`</p>
+      </li>
+      <li>标准对象:
+        <p>
+          Array, Boolean, Date, Error, Function, JSON, Math, Number, Object, RegExp, String, Map, Set, WeakMap , WeakSet
+        </p>
+      </li>
+      <li>声明语句:
+        <p>
+          do-while, for-in, for-of, try-catch, let, var, const, if-else, switch
+        </p>
+      </li>
+      <li>数列方法:
+        <p>
+          concat, every, filter, forEach, indexOf, join, lastIndexOf, map, pop, push, reduce, reduceRight, reverse, shift, sort, some, unshift
+        </p>
+      </li>
+      <li>字符串方法:
+        <p>toLowerCase, toUpperCase, chartAt, charCodeAt, indexOf, lastIndexOf, slice, substring, substr, split, replace, mathch</p>
+      </li>
+      <li>dom方法:
+        <p>getElementById, getElementsByTagName, getElementByClassName, appendChild, removeChild, replaceChild, insertBefore, createAttribute, createElement, createTextNode, getAttribute, setAttribute</p>
+      </li>
+      <li>window方法:
+        <p>setIterval, setTimeout, clearInterval, clearTimeout, alert, prompt, comfirm, open, close, moveTo, resizeTo</p>
+      </li>
+      <li>Object方法:
+        <p>assign, create, defineProperties, defineproperty, keys, values, entries, hasOwnProperty, getOwnProperyDesciptor, getOnwProperyDesciptors, getOwnPropertyNames, getOwnPropertySymbos, getPrototypeOf, isProtypeOf, is, freeze, isFreezen, preventExtensions, isExtensible, seal, isSealed</p>
+      </li>
+      <li>更改调用主体对象:
+        <p>apply,bind,call</p>
+        <pre>
+          var name ='小王' ,age=17;
+          var obj={
+          name:"小张",
+          objAge :this. age,
+          myFun: function(from,to){
+          console. log( this.name +"年龄"+ this.age + "来自" + from + "去往" + to );
+          }
+          }
+          var db={
+          name:'小白',
+          age:99
+          }
+        </pre>
+      </li>
+      <li>some,every:
+        <pre>
+          var arr = [ 1, 2, 3, 4, 5, 6 ];
+          console.log( arr.some( function( item, index, array ){
+          console.log( 'item=' + item + ',index='+index+',array='+array );
+          return item > 3;
+          }));
+          console.log( arr.every( function( item, index, array ){
+          console.log( 'item=' + item + ',index='+index+',array='+array );
+          return item > 3;
+          }));
+        </pre>
+      </li>
+      <li>map:
+        <pre>
+          var arr = [1,4,9,16];
+          const map = arr.map(x => x * 2);
+          console.log(map);
+        </pre>
+      </li>
+      <li>reduce:
+        <pre>
+          var arr = [3,9,4,3,6,0,9];
+          //求数组之和;
+          var sum = arr.reduce(function (prev, cur) {
+          return prev + cur;
+          },0);
+          //求数组项最大值;
+          var max = arr.reduce(function (prev, cur) {
+          return Math.max(prev,cur);
+          });
+          //数组去重;
+          var newArr = arr.reduce(function (prev, cur) {
+          prev.indexOf(cur) === -1 && prev.push(cur);
+          return prev;
+          },[]);
+        </pre>
+      </li>
+      <li>for...of...:
+        <pre>
+          let s = "helloabc";
+          for(let item in s) {
+          console.log(c);
+               }
+        </pre>
+      </li>
+      <li>鼠标事件:
+        <p>click, dbclick, mousedown, mouseup, mouseover, mouseout, mouseenter, mousemove</p>
+      </li>
+      <li>键盘事件:
+        <p>keydown, keypress, keyup</p>
+      </li>
+      <li>HTML事件:
+        <p>load, select, change, focus, resize, scroll</p>
+      </li>
+      <li>偏函数:
+        <pre>
+          function createStyle(dom) {
+              return function (styleName) {
+                  return function (value) {
+                  dom.style[styleName] = value
+                  }
+              }
+          }
+        </pre>
+      </li>
+      <li>柯里化:
+        <pre>
+          function curryFunc(cb){
+              let list = [] // 用数组进行保存
+              return function () { // 参数个数不定
+              // 对传入的参数个数进行判断,如果没有穿传参数, 就计算结果
+                  if(arguments.length === 0){
+                      return list.reduce(cb)
+                  }
+                  list.push.apply(list, arguments)
+                  return arguments.callee // 指的就是当前这个arguments所在的函数
+              }
+          }
+
+          let sum = curryFunc((a,b)=>a+b)
+          sum(1,2,3)
+          sum(4)(5)(6)
+            console.log(sum());
+        </pre>
+      </li>
+      <li>尾递归:
+        <pre>
+          function fibonacci(n, first = 0, second = 1) {
+              if(n < 1) return NaN
+              if(n === 1) {
+                 return second
+              }
+              return fibonacci(n-1, second, first + second)
+         }
+        </pre>
+      </li>
+      <li>节流:
+        <pre>
+          <xmp>
+          document.querySelector("body").innerHTML =
+          `<input type="button" value="按钮" class="btn">
+          <input type="text" class="input">
+          <p></p>`
+          let input = document.querySelector(".input");
+          let p = document.querySelector("p")
+
+          input.oninput = (function () {
+              let timer = 0
+              return function (event){
+                  clearTimeout(timer)
+                  timer = setTimeout(()=> {
+                      p.innerHTML = "查询结果: "+event.target.value
+                  }, 700)
+              }
+          })()
+	  </xmp>
+        </pre>
+      </li>
+      <li>promise:
+        <pre>
+          function sleep(ms) {
+             return new Promise(function(resolve, reject) {
+                 setTimeout(resolve, ms);
+    })
+}
+sleep(500).then( ()=> console.log("finished"));
+        </pre>
+      </li>
+    </ol>
+  </body>
+</html>

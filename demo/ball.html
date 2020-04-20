@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <style>
+     .canvas{
+       width: 800px;
+       height: 800px;
+     }
+    </style>
+  </head>
+  <body>
+    <canvas class="canvas" width="800px" height="800px"></canvas>
+    <script>
+     console.log("1")
+     var canvas = document.querySelector(".canvas")
+     var ctx = canvas.getContext("2d")
+     var ballList = []
+
+     class Ball{
+       constructor(){
+	 this.y = Math.random() * 800
+	 this.x = Math.random() * 800
+
+	 this.lx = Math.random()*100
+	 this.ly = Math.random()*100
+
+	 this.vx = Math.random()
+	 this.vy = Math.random()
+	 this.r = Math.random()*30
+	 this.color = "#" + Math.random().toString(16).slice(2,8)
+       }
+       draw(ctx){
+	 ctx.beginPath()
+	 ctx.fillStyle = this.color
+	 ctx.arc(this.x,this.y,this.r,0,Math.PI*2)
+	 ctx.fill()
+	 ctx.beginPath()
+	 ctx.strokeStyle = this.color
+       }
+       update(){
+	 //this.y += this.x * Math.sin(Math.PI*0.25)
+      	 if(this.x > 800 || this.x <0 ){
+	   this.vx = this.vx * -1
+      	 }
+      	 if(this.y >800 || this.y < 0){
+	   this.vy = this.vy * -1
+	 }
+	 this.x += this.vx
+ 	 this.y += this.vy
+	 /* 	 this.color = "#" + Math.random().toString(16).slice(2,8) */
+       }
+     }
+     for(i=0;i<20; i++){
+       ballList.push(new Ball())
+     }
+     function render(){
+       requestAnimationFrame(render)
+       ctx.clearRect(0,0,canvas.width,canvas.height)
+       ballList.forEach((ball,i,arr) =>{
+	 //	 console.log(ball.x)
+	 ball.draw(ctx)
+	 ball.update()
+
+       })
+       //     console.log(ballList)
+       ballList.forEach((ball,i,arr) =>{
+	 if(arr[i-1]){
+	   if(Math.abs(arr[i].x-arr[i-1].x) < 300 && Math.abs(arr[i].y - arr[i-1].y) < 300){
+	     ctx.moveTo(arr[i].x,arr[i].y)
+	     ctx.lineTo(arr[i-1].x,arr[i-1].y)
+	     ctx.strokeStyle = `${ball.color}`
+	     //	     console.log(ctx.strokeStyle)
+	     //  console.log(ball.color)
+	     ctx.stroke()
+	   }
+	   let distance = Math.sqrt(Math.pow(arr[i].x-arr[i-1].x, 2) + Math.pow(arr[i].y - arr[i-1].y,2))
+	   //  console.log(distance)
+	 }
+       })
+
+       //     console.log(ballList)
+     }
+     render()
+    </script>
+  </body>
+</html>

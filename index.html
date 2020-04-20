@@ -1,0 +1,240 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <style>
+     body,h1,h2,h3,h4,h5,h6,p{
+       margin: 0;
+       padding: 0;
+       font-weight: normal;
+       font-size: 16px;
+     }
+     body{
+       width: 100vw;
+       height: 100vh;
+     }
+     h1{
+       width: 200px;
+       height: 50px;
+       font-size: 35px;
+       line-height: 50px;
+       background-color: #666;
+       text-align: center;
+       border-radius: 10px;
+       text-shadow: 3px 3px #291;
+     }
+     .blog{
+       position: relative;
+       width: 1200px;
+       margin: 0 auto;
+       background-color: #ccc;
+       min-height: 850px;
+     }
+     .aside{
+       width: 200px;
+       min-height: 800px;
+       background-color: #851;
+       border-radius: 10px;
+     }
+     .aside a{
+       text-decoration: none;
+       color: #593;
+     }
+     .aside p{
+       padding: 5px;
+       text-align: center;
+     }
+     #canvas{
+       position: absolute;
+       top: 0px;
+       left: 200px;
+       width: 850px;
+       height: 850px;
+       background-color: #3a8;
+     }
+     footer a span{
+       float: right;
+     }
+    </style>
+    <script src="node_modules/vconsole/dist/vconsole.min.js"></script>
+  </head>
+  <body>
+    <div class="blog">
+      <h1>BLOG</h1>
+      <aside class="aside">
+	<a href="/html.html"><p>HTML</p></a>
+	<a href="/css.html"><p>CSS</p></a>
+	<a href="/javascript.html"><p>JAVASCRIPT</p></a>
+	<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><p>MDN</p></a>
+	<a href="https://www.github.com">	<p>GITHUB</p></a>
+	<a href="/demo/ball.html"><p>BALL</p></a>
+	<a href="https://npmjs.com"><p>NPM</p></a>
+	<a href="https://vuejs.org"><p>VUE</p></a>
+	<a href="https://reactjs.org"><p>REACT</p></a>
+	<a href="https://nodejs.org/dist/latest-v13.x/docs/api/"><p>NODE</p></a>
+      </aside>
+      <canvas id="canvas" width="850px" height="850px"></canvas>
+      <canvas id="canvas2"></canvas>
+    </div>
+    <footer>
+      <a href="http://www.beian.miit.gov.cn">  <span> www.fyyd.vip  粤ICP备19161033号</span></a>
+    </footer>
+    <script>
+     const canvas = document.querySelector("#canvas")
+     const canvas2 = document.querySelector("#canvas2")
+
+     const ctx = canvas.getContext("2d")
+     const ctx2 = canvas2.getContext("2d")
+     /*      console.log(ctx2) */
+     let w,h
+     w = canvas.width
+     h = canvas.height
+     window.addEventListener("resize",function(){
+       w = canvas.width
+       h = canvas.height
+     })
+     /*      console.log(1) */
+     class Fish{
+       constructor(){
+         this.src = './demo/fish.png'
+         this.img = new Image()
+         this.posX = 20 + Math.random()*830
+         this.posY = 20 + Math.random()*830
+         this.count = 12
+         this.scale = 0.5
+         this.index = 0
+         this.c = 0
+         this.degree = 0
+         this.v = 3
+         this.vDegree = 0.001
+       }
+       init(){
+         this.img.src = this.src
+	 /*          console.log(this.img.width, 666) */
+	 this.basicWidth = this.img.width
+         this.basicHeight = this.img.height / this.count
+         this.width = this.basicWidth * this.scale
+         this.height = this.basicHeight * this.scale
+       }
+       draw(ctx){
+	 /* 	 console.log(ctx + "test") */
+         ctx.translate(this.posX + this.width/2,this.posY + this.height/2)
+         ctx.rotate(this.degree)
+         ctx.drawImage(this.img,
+                       0,this.index * this.basicHeight,
+                       this.basicWidth,this.basicHeight,
+                      -this.width/2,-this.height/2,
+                       this.width,this.height)
+         ctx.rotate(-this.degree)
+         ctx.translate(-this.posX - this.width/2,-this.posY - this.height/2)
+       }
+       update(){
+         this.c++
+         if(this.c > 8){
+           this.index++
+           if(this.index >= this.count){
+             this.index = 0
+           }
+           this.c = 0
+         }
+         if (this.posX > w - this.width ){
+           this.degree = Math.PI
+         }
+         if (this.posX < 0  ){
+           this.degree = 0
+         }
+         if (this.posY < 0 + this.height / 2){
+           this.degree = Math.PI/2
+         }
+         if (this.posY > h - this.height*3 / 2){
+           this.degree = Math.PI*3/2
+         }
+       }
+       turnLeft(){
+         this.degree += this.vDegree
+       }
+       turnRight(){
+         this.degree -= this.vDegree
+       }
+       forWord(){
+         this.posX += Math.cos(-this.degree)*this.v
+         this.posY -= Math.sin(-this.degree)*this.v
+       }
+       backWord(){
+         this.posX -= Math.cos(-this.degree)*this.v
+         this.posY += Math.sin(-this.degree)*this.v
+       }
+     }
+
+     let fish = new Fish()
+     let fishList = []
+     for(i=0;i<5;i++){
+       fishList.push(new Fish())
+     }
+     ballList = []
+     let point = {
+       X: 0,
+       Y: 0
+     }
+     class Ball{
+       constructor(){
+	 this.x = 0
+	 this.y = 0
+       }
+       update(){
+	 this.x = point.X
+	 this.y = point.Y
+       }
+       draw(ctx2){
+	 ctx2.fillStyle = "#56a"
+	 ctx2.arc(this.x,this.y,30,0,Math.PI*2)
+	 ctx2.fill()
+	 console.log(point.X)
+       }
+     }
+     document.addEventListener("click", function(e){
+       point.X = e.clientX
+       point.Y = e.clientY
+       console.log(point.X)
+       render2()
+     })
+     let ball = new Ball()
+     let w2 = canvas2.width
+     let h2 = canvas2.height
+
+     function render2(){
+       //  requestAnimationFrame(render2)
+       //       ball.update()
+       ball.draw(ctx2)
+     }
+     function foo(){
+       console.log(point.X)
+
+     }
+     let Interval = setInterval(foo,3000)
+     console.log(Interval)
+     if (Interval){
+       Interval = null
+     }
+console.log("aa")
+     function render(){
+       ctx.clearRect(0,0 ,w,h)
+       ctx2.clearRect(0,0,w2,h2)
+       requestAnimationFrame(render)
+       ball.update()
+       fishList.forEach(fish =>{
+	 fish.init()
+	 fish.draw(ctx)
+         fish.update()
+         fish.forWord()
+         fish.turnRight()
+       })
+     }
+     render()
+    </script>
+    <script>
+     var vConsole = new VConsole();
+     //
+    </script>
+  </body>
+</html>

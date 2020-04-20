@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>NGINX</h1>
+    <ol>
+      <li>设置服务器
+	<p class="code">
+	 
+	</p>
+      </li>
+    </ol>
+    <script>
+      function code(){
+      let code = document.querySelector(".code")
+      code.innerHTML = `
+ server{
+		listen 80;
+		server_name 119.23.28.199;
+		location / {
+			root /root/www/;
+			index index.html;
+		}
+	}
+      `
+      }
+      code()
+    </script>
+  </body>
+</html>

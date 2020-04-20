@@ -1,0 +1,279 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+     body,h,h2,h3,h4,h5,h6,li,ul{
+       margin: 0;
+       padding: 0;
+       font-weight: normal;
+       font-size: 16px;
+     }
+     ul{
+       /*list-style: none;*/
+     }
+     .content{
+       /* width: 1000px;*/
+       margin-left: 20px;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>EMACS</h1>
+      <p>对emacs进行配置</p>
+      <ol class="setting">
+	<li>更新插件包源:
+	  <p> (require 'package)</p>
+	  <p>(setq package-enable-at-startup nil)</p>
+	  <p>(setq package-archives '(("melpa" . "https://melpa.org/packages/")))</p>
+	  <p>(package-initialize)</p>
+	</li>
+	<li>设置行号:
+	  <p>(global-linum-mode t)</p>
+	</li>
+	<li>设置ido模式,打开文件时列出当前目录下文件名:
+	  <p>(require 'ido)</p>
+	  <p>(ido-mode t)</p>
+	</li>
+	<li>安装helm插件:
+	</li>
+	<li>设置smex模式,打开命令时列出候选命令名:
+	  <p>(smex-initialize)</p>
+	  <p>(global-set-key (kbd "M-x") 'smex)</p>
+	  <p>(global-set-key (kbd "M-X") 'smex-major-mode-commands)</p>
+	  <p>  ;; This is your old M-x.</p>
+	  <p>(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)</p>
+	</li>
+	<li>设置tab缩进:
+	  <p>
+	    (defun my-custom-settings-fn ()
+	    (setq indent-tabs-mode t)
+	    (setq tab-stop-list (number-sequence 2 200 2))
+	    (setq tab-width 2)
+	    (setq indent-line-function 'insert-tab))
+
+	    (add-hook 'text-mode-hook 'my-custom-settings-fn)
+	  </p>
+	</li>
+	<li>设置高亮:
+          <p>install auto-highlight hl-angything</p>
+          <p>(require 'auto-highlight-symbol)
+            (global-auto-highlight-symbol-mode t)
+            (global-hl-line-mode t)</p>
+        </li>
+	<li>设置括号高亮:
+	  <p>install lighhight-parentheses</p>
+	  <p>(require 'highlight-parentheses)</p>
+	  <p> (global-highlight-parentheses-mode t)</p>
+
+	</li>
+	<li>设计主题：
+	  <p>(load-theme 'misterioso t)  </p>
+	  <p>adwaita</p>
+	  <p>deeper-blue</p>
+	  <p>dichromacy</p>
+	  <p>light-blue</p>
+	  <p>manoj-dark</p>
+	  <p>misterioso</p>
+	  <p>tango</p>
+	  <p>tango-dark</p>
+	  <p>tsdh-dark</p>
+	  <p>tsdh-light</p>
+	  <p>wheatgrass</p>
+	  <p>whiteboard</p>
+	  <p>wombat</p>
+	</li>
+	<li>安装company插件，设置自动补全：
+	  <p>(add-hook 'after-init-hook 'global-company-mode)</p>
+        </li>
+        <li>设置company-web-html:
+          <p>(require 'company-web-html)</p>
+          <p>(global-set-key (kbd "C-'") 'company-web-html)</p>
+	  <li>导入目录:
+	    <p>(add-to-list 'load-path "diretory")</p>
+	  </li>
+	  <li>安装emmet插件,补全标签:
+            <p>(global-set-key (kbd "C-j") 'emmet-mode)</p>
+          </li>
+          <li>安装高亮缩进插件:
+            <p>(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)</p>
+            <p>(setq highlight-indent-guides-method 'character)</p>
+            <p>(setq highlight-indent-guides-character ?\|)</p>
+          </li>
+	  <p>emcas快捷键</p>
+      </ol>
+      <ol>
+	<li>
+	  <ol>
+	    <li>ctrl+a: 跳转到行首</li>
+	    <li>ctrl+b: 后退一个字符</li>
+	    <li>ctrl+c: 前缀符</li>
+	    <li>ctrl+d: 删除当前光标所在字符</li>
+	    <li>ctrl+e: 跳转到行尾</li>
+	    <li>ctrl+f: 前进一个字符</li>
+	    <li>ctrl+g: 退出当前命令</li>
+	    <li>ctrl+h: 帮助命令前缀符</li>
+	    <li>ctrl+i: 格式对齐</li>
+	    <li>ctrl+j: 光标后字符换行至行首</li>
+	    <li>ctrl+k: 删除光标至行尾字符串</li>
+	    <li>ctrl+l: ...</li>
+	    <li>ctrl+m: 光标后字符换行并缩进</li>
+	    <li>ctrl+n: 光标换行</li>
+	    <li>ctrl+o: 增加空行</li>
+	    <li>ctrl+p: 光标移至前一行</li>
+	    <li>ctrl+q: ...</li>
+	    <li>ctrl+r: 向后搜索</li>
+	    <li>ctrl+s: 向前搜索</li>
+	    <li>ctrl+t: ...</li>
+	    <li>ctrl+u: 前缀符</li>
+	    <li>ctrl+v: 向前翻页</li>
+	    <li>ctrl+w: 复制选中字符</li>
+	    <li>ctrl+x: 前缀符</li>
+	    <li>ctrl+y: 粘贴</li>
+	    <li>ctrl+z: 终止当前编辑</li>
+	  </ol>
+	</li>
+	<li>
+	  <ol>
+	    <li>ctrl+h,a: 搜索命令使用方法</li>
+	    <li>ctrl+h,b: 显示所有快捷键</li>
+	    <li>ctrl+h,c: ...</li>
+	    <li>ctrl+h,d: 搜索输入字符相关文档</li>
+	    <li>ctrl+h,e: ...</li>
+	    <li>ctrl+h,f: 显示函数相关信息</li>
+	    <li>ctrl+h,g: ...</li>
+	    <li>ctrl+h,h: ....</li>
+	    <li>ctrl+h,i: 显示帮助信息</li>
+	    <li>ctrl+h,j: ...</li>
+	    <li>ctrl+h,k: 显示快捷键帮助</li>
+	    <li>ctrl+h,l: ...</li>
+	    <li>ctrl+h,m: 显示帮助页</li>
+	    <li>ctrl+h,n: 显示更新</li>
+	    <li>ctrl+h,o: 显示命令信息</li>
+	    <li>ctrl+h,p: 显示包信息</li>
+	    <li>ctrl+h,q: ...</li>
+	    <li>ctrl+h,r: 帮助顶级目录</li>
+	    <li>ctrl+h,s: 特殊符号</li>
+	    <li>ctrl+h,t: 显示帮助引导</li>
+	    <li>ctrl+h,u: ...</li>
+	    <li>ctrl+h,v: 显示变量</li>
+	    <li>ctrl+h,w: 显示命令位置</li>
+	    <li>ctrl+h,x: ...</li>
+	    <li>ctrl+h,y: ....</li>
+	    <li>ctrl+h,z: ...</li>
+	  </ol>
+	</li>
+	<li>
+	  <ol>
+	    <li>ctrl+x,a: ...</li>
+	    <li>ctrl+x,b: 列出已打开文本</li>
+	    <li>ctrl+x,c: ...</li>
+	    <li>ctrl+x,d: 打开目录</li>
+	    <li>ctrl+x,e: 启动macro</li>
+	    <li>ctrl+x,f: 设置填充行</li>
+	    <li>ctrl+x,g: ...</li>
+	    <li>ctrl+x,h: 标记所有字符</li>
+	    <li>ctrl+x,i: 插入文件</li>
+	    <li>ctrl+x,j: ...</li>
+	    <li>ctrl+x,k: 关闭指定文本</li>
+	    <li>ctrl+x,l: 显示文本总行数及当前行号</li>
+	    <li>ctrl+x,m: 发送文本</li>
+	    <li>ctrl+x,n: ...</li>
+	    <li>ctrl+x,o: ...</li>
+	    <li>ctrl+x,p: ...</li>
+	    <li>ctrl+x,q: 退出macro</li>
+	    <li>ctrl+x,r: ...</li>
+	    <li>ctrl+x,s: 跳出保存文件对话框</li>
+	    <li>ctrl+x,t: ...</li>
+	    <li>ctrl+x,u: 撤销前一个命令</li>
+	    <li>ctrl+x,v: ...</li>
+	    <li>ctrl+x,w: ...</li>
+	    <li>ctrl+x,x: ...</li>
+	    <li>ctrl+x,y: ...</li>
+	    <li>ctrl+x,z: ...</li>
+	  </ol>
+	</li>
+	<li>
+	  <ol>
+	    <li>H ctrl+a: 关于EMACS</li>
+	    <li>H ctrl+b: ...</li>
+	    <li>H ctrl+c: 版权</li>
+	    <li>H ctrl+d: 信息</li>
+	    <li>H ctrl+e: 信息</li>
+	    <li>H ctrl+f: 存在的一些问题</li>
+	    <li>H ctrl+g: ...</li>
+	    <li>H ctrl+h: 全部帮助</li>
+	    <li>H ctrl+i: ...</li>
+	    <li>H ctrl+j: ...</li>
+	    <li>H ctrl+k: ...</li>
+	    <li>H ctrl+l: ...</li>
+	    <li>
+	  </ol>
+	    </li>
+	    <li>
+	      <ol>
+		<li>X ctrl+a: ...</li>
+		<li>X ctrl+b: 显示所有文本</li>
+		<li>X ctrl+c: 关闭当前文本</li>
+		<li>X ctrl+d: 显示指定目录下所有文件</li>
+		<li>X ctrl+f: 打开指定文件</li>
+		<li>X ctrl+g: ...</li>
+		<li>X ctrl+h: 显示以ctrl+x为前缀的快捷键</li>
+		<li>X ctrl+i: 移动光标前所有字符</li>
+		<li>X ctrl+j: ...</li>
+		<li>X ctrl+k: 前缀符</li>
+		<li>X ctrl+l: 光标前字符转为小写</li>
+		<li>X ctrl+m: ...</li>
+		<li>X ctrl+n: ...</li>
+		<li>X ctrl+o: ...</li>
+		<li>X ctrl+p: 选中所有字符</li>
+		<li>X ctrl+q: 只读模式</li>
+		<li>X ctrl+r: 以只读模式打开文档</li>
+		<li>X ctrl+s: 保存文本</li>
+		<li>X ctrl+t: 与前一行切换位置</li>
+		<li>X ctrl+u: 选定区域字母大写</li>
+		<li>X ctrl+v: ...</li>
+		<li>X ctrl+w: 覆盖文本</li>
+		<li>X ctrl+x: ...</li>
+		<li>X ctrl+y: ...</li>
+		<li>X ctrl+z: ...</li>
+	      </ol>
+	    </li>
+	    <li>
+	      <ol>
+		<li>alt+a: 跳转至当前行首个字符串前</li>
+		<li>alt+b: 往后跳转一个单词</li>
+		<li>alt+c: 行尾或下行行尾</li>
+		<li>alt+d: 删除后一行</li>
+		<li>alt+e: 跳至行尾</li>
+		<li>alt+f: 和往前跳一个单词或下一行</li>
+		<li>alt+g: ...</li>
+		<li>alt+h:	设置选择区域</li>
+		<li>alt+i: 光标后字符往后移</li>
+		<li>alt+j: 添加空白行</li>
+		<li>alt+k: 往后删除区域字符</li>
+		<li>alt+l: 往前跳一个单词或下一行</li>
+		<li>alt+m: 光标跳至当前行行首</li>
+		<li>alt+n: ...</li>
+		<li>alt+o: 字体样式设置</li>
+		<li>alt+p: ....</li>
+		<li>alt+q: ...</li>
+		<li>alt+r: 当前页面跳转上中下</li>
+		<li>alt+s: ...</li>
+		<li>alt+t: 往前跳一个单词或下一行</li>
+		<LI>alt+u: 往前跳一个单词或下一行</li>
+		<li>alt+v: 往后退一个屏幕</li>
+		<li>alt+w: ...</li>
+		<li>alt+x: 调出命令输入窗口</li>
+		<li>alt+y: ...</li>
+		<li>alt+z: ...</li>
+		<li>alt+>: 跳转到文档末尾</li>
+	      </OL>
+      </OL>
+	  </t>
+    </Div>
+    <script>
+    </script>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+     #canvas{
+       display: block;
+     }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+
+     const canvas = document.querySelector("#canvas")
+     const ctx = canvas.getContext("2d")
+     let w,h
+
+     w = canvas.width = window.innerWidth
+     h = canvas.height = window.innerHeight
+     window.addEventListener("resize",function(){
+       w = canvas.width = window.innerWidth
+       h = canvas.height = window.innerHeight
+     })
+     console.log(1)
+     class Fish{
+       constructor(){
+         this.src = './fish.png'
+         this.img = new Image()
+         this.posX = 20 + Math.random()*700
+         this.posY = 20 + Math.random()*700
+         this.count = 12
+
+         this.scale = 0.5
+         this.index = 0
+         this.c = 0
+         this.degree = 0
+         this.v = 3
+         this.vDegree = 0.001
+
+
+	 /*          this.init() */
+       }
+       init(){
+         this.img.src = this.src
+         console.log(this.img.width, 666)
+	 this.basicWidth = this.img.width
+         this.basicHeight = this.img.height / this.count
+         this.width = this.basicWidth * this.scale
+         this.height = this.basicHeight * this.scale
+       }
+       draw(ctx){
+         // console.log("aa")ro
+         ctx.translate(this.posX + this.width/2,this.posY + this.height/2)
+         ctx.rotate(this.degree)
+
+
+         ctx.drawImage(this.img,
+                       0,this.index * this.basicHeight,
+                       this.basicWidth,this.basicHeight,
+                      -this.width/2,-this.height/2,
+                       this.width,this.height)
+         ctx.rotate(-this.degree)
+         ctx.translate(-this.posX - this.width/2,-this.posY - this.height/2)
+
+       }
+       update(){
+         this.c++
+         if(this.c > 8){
+           this.index++
+           if(this.index >= this.count){
+             this.index = 0
+           }
+           this.c = 0
+         }
+         if (this.posX > w - 200 ){
+           this.degree = Math.PI
+         }
+         if (this.posX < 0  ){
+           this.degree = 0
+         }
+         if (this.posY < 0 ){
+           this.degree = Math.PI/2
+	   /*            console.log(this.v) */
+         }
+         if (this.posY > h - 200){
+           this.degree = Math.PI*3/2
+	   /*            console.log(this.v) */
+         }
+       }
+       turnLeft(){
+         this.degree += this.vDegree
+       }
+       turnRight(){
+         this.degree -= this.vDegree
+       }
+       forWord(){
+         this.posX += Math.cos(-this.degree)*this.v
+         this.posY -= Math.sin(-this.degree)*this.v
+       }
+
+       backWord(){
+         this.posX -= Math.cos(-this.degree)*this.v
+         this.posY += Math.sin(-this.degree)*this.v
+       }
+     }
+
+     let fish = new Fish()
+     /*      console.log(fish) */
+     let fishList = []
+     for(i=0;i<5;i++){
+       fishList.push(new Fish())
+       /*        console.log(fishList) */
+     }
+     function render(){
+       ctx.clearRect(0,0 ,w,h)
+       requestAnimationFrame(render)
+       fishList.forEach(fish =>{
+	 fish.init()
+	 fish.draw(ctx)
+         fish.update()
+	 /* 	 console.log(fish.img.width,555) */
+         fish.forWord()
+         fish.turnRight()
+       })
+
+     }
+     render()
+
+
+     window.addEventListener("keypress",e =>{
+       if(e.key.toLowerCase() === "a"){
+         fish.turnLeft()
+       }else if(e.key.toLowerCase() === "d"){
+         fish.turnRight()
+       }
+       if(e.key.toLowerCase() === "w"){
+         fish.forWord()
+       }else if(e.key.toLowerCase() === "s"){
+         fish.backWord()
+       }
+     })
+
+    </script>
+  </body>
+</html>
